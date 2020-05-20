@@ -1,0 +1,50 @@
+﻿<Page x:Class="SellerApp.Overview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:SellerApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Overview">
+    <Page.Resources>
+        <Style TargetType="{x:Type DataGridRow}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="Congratulations. Auction won.">
+                    <Setter Property="Background" Value="Green"></Setter>
+                    <Setter Property="Foreground" Value="White"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" x:Name="DataItems" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding}"  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Seller" Binding="{Binding Path=Item.Seller.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Type of metal" Binding="{Binding Path=Item.Type}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Amount"  Binding="{Binding Path=Item.Amount}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Price" Binding="{Binding Path=Item.Price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Highest Bidder" Binding="{Binding Path=Item.Buyer.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Expires" Binding="{Binding Path=Item.Expire}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}"></DataGridTextColumn>
+                <DataGridTextColumn CanUserSort="False" Header="Time left" Binding="{Binding Path=TimeLeft}"></DataGridTextColumn>
+                <DataGridTemplateColumn Header="Place bidding">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnBid" Content="Bid now" Click="btnBid_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button HorizontalAlignment="Left" Grid.Row="1" x:Name="btnRefresh" Click="btnRefresh_Click">Refresh</Button>
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="3">
+            <StatusBarItem x:Name="statusBar"></StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Page>

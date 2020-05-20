@@ -1,0 +1,71 @@
+﻿@model IEnumerable<AuktionsOpgave.Models.Item>
+
+@{
+    ViewBag.Title = "Overview";
+}
+
+
+    <div class="jumbotron">
+        <table class="table table-striped">
+        <p>
+            @Html.ActionLink("Create New Auction", "Create")
+        </p>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.Label("Amount (kg)")
+                </th>
+                <th>
+                    @Html.Label("Expires")
+                </th>
+
+                <th>
+                    @Html.Label("Highest Bidder")
+                </th>
+                <th>
+                    @Html.Label("Status")
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                string toReturn = "";
+               
+                if (item.Expire.CompareTo(DateTime.Now) > 0)
+                {
+                    toReturn = "Ongoing";
+                } else if(item.Expire.CompareTo(DateTime.Now) < 0)
+                {
+                    toReturn = "Auction has ended";
+                }
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Expire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Buyer.Name)
+            </td>
+            <td>
+                
+                @Html.Label(toReturn)
+            </td>
+        </tr>
+            }
+
+        </table>
+    </div>
